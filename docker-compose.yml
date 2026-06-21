@@ -1,0 +1,10 @@
+# DailyLifeOS — drop this on any box with Docker. The vault persists in ./data, on YOUR hardware.
+services:
+  dailylifeos:
+    build: .
+    image: dailylifeos:latest
+    container_name: dailylifeos
+    volumes:
+      - ./data:/data        # your vault stays here, on your box — never leaves
+    # no ports published: this layer has no network surface by design (the firewall)
+    command: ["status"]

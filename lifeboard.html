@@ -1,0 +1,40 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LifeBoard · Don · DailyLifeOS</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0B0F14;color:#E8EEF5;font:16px/1.5 Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+.top{padding:26px 24px 6px;max-width:1080px;margin:0 auto}
+.brand{color:#F2B441;font-weight:800;letter-spacing:.3px;font-size:15px}
+h1{margin:6px 0 2px;font-size:clamp(26px,5vw,40px);font-weight:800;letter-spacing:-.5px}
+h1 span{color:#F2B441}
+.date{color:#9fb1c2;margin:0 0 14px}
+.grid{max-width:1080px;margin:0 auto;padding:8px 24px 30px;display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.card{background:#121922;border:1px solid #1F2A36;border-radius:16px;padding:18px 20px}
+.card h3{margin:0 0 12px;font-size:16px;letter-spacing:-.2px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:6px 0;font-size:15px}
+.row .when{color:#9fb1c2;font-size:13px;white-space:nowrap}
+.warn{color:#E2524F;font-size:12px;font-weight:700}
+.big{font-size:44px;font-weight:800;color:#F2B441;line-height:1}
+.big small{font-size:18px;color:#9fb1c2;font-weight:600}
+.sub{color:#9fb1c2;font-size:13px;margin:6px 0 0}
+.empty{color:#9fb1c2;font-size:14px;margin:4px 0}
+.bar{height:6px;background:#0B0F14;border-radius:6px;overflow:hidden;margin:2px 0 8px}
+.bar i{display:block;height:100%}
+.foot{max-width:1080px;margin:0 auto;padding:6px 24px 40px;color:#9fb1c2;font-size:13px;text-align:center;line-height:1.6}
+.foot b{color:#2FB67A}
+.lock{display:inline-block;background:#121922;border:1px solid #1F2A36;border-radius:999px;padding:6px 14px;margin:8px 0}
+</style></head><body>
+<div class="top">
+  <div class="brand">🐝 LifeBoard · DailyLifeOS</div>
+  <h1>Good evening, <span>Don</span>.</h1>
+  <p class="date">Sunday, June 21 · your life, organized.</p>
+</div>
+<div class="grid"><div class="card" style="border-top:3px solid #F2B441"><h3>📅 Next appointments</h3><div class="row"><span><b>Podiatry</b> · Dr. Greene</span><span class="when">Jun 24 · in 2d</span></div><div class="row"><span><b>Endocrinology</b> · Dr. Patel</span><span class="when">Jul 12 · in 20d</span></div><div class="row"><span><b>Ophthalmology</b> · Dr. Lee</span><span class="when">Aug 30 · in 69d</span></div></div><div class="card" style="border-top:3px solid #2FB67A"><h3>💊 Today's medications</h3><div class="row"><span>💊 Insulin (Lantus)</span><span class="when">nightly</span></div><div class="row"><span>💊 Metformin</span><span class="when">2x daily</span></div></div><div class="card" style="border-top:3px solid #F2B441"><h3>🩸 A1C trend</h3><div class="big">6.9<small>%</small> <span style="color:#2FB67A">↓0.5</span></div><svg width="120" height="34" viewBox="0 0 120 34"><polyline fill="none" stroke="#F2B441" stroke-width="2.5" points="0,3 60,19 120,31"/></svg><p class="sub">last drawn 2026-06-14</p></div><div class="card" style="border-top:3px solid #2FB67A"><h3>📦 Supplies</h3><div class="row"><span>Test Strips <span class="warn">⚠️ low</span></span><span class="when">18 · ~4.5d</span></div><div class="bar"><i style="width:15%;background:#E2524F"></i></div><div class="row"><span>Pen Needles</span><span class="when">60 · ~30.0d</span></div><div class="bar"><i style="width:100%;background:#2FB67A"></i></div><div class="row"><span>CGM Sensors</span><span class="when">2 · ~20.0d</span></div><div class="bar"><i style="width:66%;background:#2FB67A"></i></div></div><div class="card" style="border-top:3px solid #D99A2B"><h3>🔔 Due for refill</h3><div class="row"><span>🔔 Test Strips</span><span class="when">~4.5d left</span></div><div class="row"><span>🔔 Insulin (Lantus)</span><span class="when">~12.0d left</span></div></div><div class="card" style="border-top:3px solid #3D9BE9"><h3>📄 Documents</h3><div class="row"><span>📄 BlueCross Insurance Card</span><span class="when">insurance</span></div><div class="row"><span>📄 Medicare Card</span><span class="when">insurance</span></div></div><div class="card" style="border-top:3px solid #E2524F"><h3>🆘 Emergency</h3><div class="row"><span>🆘 Sarah (daughter)</span><span class="when">555-0199</span></div></div></div>
+<div class="foot">
+  <div class="lock">🔒 Your records never left this box · 1 PHI-blind receipt · chain ✓ verified</div>
+  <p>DailyLifeOS · powered by the LocalDiabetic vault · the model is one service, not the star.<br>
+  © 2026 Swarm and Bee LLC · build@opendiabetic.com</p>
+</div>
+</body></html>

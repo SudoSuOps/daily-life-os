@@ -40,6 +40,51 @@ See **[ARCHITECTURE.md](ARCHITECTURE.md)** for the full blueprint.
 
 ---
 
+## Run it — Layer 1 + 2 are live (no model required)
+
+The typed vault + deterministic retrieval work today, stdlib-only:
+
+```bash
+export LD_DATA_DIR=~/.localdiabetic     # your data, your box (default ~/.localdiabetic)
+python3 ld.py seed                      # synthetic demo data (no real PHI)
+
+python3 ld.py ask "when's my next podiatrist appointment?"
+#  📅 Podiatry with Dr. Greene — 2026-06-24 (in 3 days) · Jupiter Foot & Ankle
+python3 ld.py ask "find my insurance card"
+#  📄 BlueCross Insurance Card → vault/03-insurance/bluecross-card.pdf  (+1 more on file)
+python3 ld.py ask "what was my last A1C?"
+#  🩸 Last A1C: 6.9% on 2026-06-14  (↓0.5 vs prior)
+python3 ld.py ask "how many test strips do I have left?"
+#  📦 Test Strips: 18 strips (~4.5 days)  ⚠️ running low
+python3 ld.py ask "what do I need to refill?"
+#  🔔 Test Strips (~4.5 days) · Insulin (~12 days)
+
+python3 ld.py receipts                  # verify the PHI-blind hash-chain
+python3 test_ld.py                      # end-to-end proof (8/8)
+```
+
+Every answer is an exact lookup or a piece of arithmetic — **no model, no guessing**. The on-box
+model (Layer 3) becomes the friendly natural-language shell *later*; it calls these same functions,
+and the answers never change. That's the point.
+
+## Deploy — hardware-agnostic (the durable part)
+
+Target is **Ubuntu + Docker + local storage**; Synology, UGREEN, ZimaCube, mini-PCs, and Jetsons are
+just interchangeable shells. If a vendor changes direction, you keep running. Own the hardware, the data,
+the OS, the backups.
+
+```bash
+docker compose up --build         # your vault persists in ./data, on your box, never leaves
+docker compose run --rm dailylifeos ask "what do I need to refill?"
+```
+
+Three paths, same core container:
+- **Appliance Mode** — ZimaOS + the container. Simple install. *Patients & families.*
+- **Power-User Mode** — Ubuntu + Docker + DailyLifeOS + Home Assistant / Immich / Nextcloud / Tailscale. *Tech-savvy diabetics & chapter operators.*
+- **OpenDiabetic Node** — Proxmox + LocalDiabetic VM + local AI + backup vault + Jetson. *Research, clinics, community orgs.*
+
+---
+
 ## The house
 
 - 🐝 [OpenDiabetic](https://opendiabetic.com) — the hive (compute · datasets · models · community)
