@@ -14,3 +14,7 @@ vault/
 data/
 *.jsonl
 node_modules/
+
+# python caches
+__pycache__/
+*.pyc
