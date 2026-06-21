@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 64" role="img" aria-label="OpenDiabetic">
+  <title>OpenDiabetic</title>
+  <!-- bee mark -->
+  <g transform="translate(8 8)">
+    <polygon points="24,2 44,13 44,35 24,46 4,35 4,13" fill="#F2B441"/>
+    <rect x="14" y="16" width="20" height="16" rx="2" fill="#0B0F14"/>
+    <line x1="14" y1="21" x2="34" y2="21" stroke="#F2B441" stroke-width="2.4"/>
+    <line x1="14" y1="27" x2="34" y2="27" stroke="#F2B441" stroke-width="2.4"/>
+    <path d="M10 10 q-7 4 -2 11" fill="none" stroke="#3D9BE9" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M38 10 q7 4 2 11" fill="none" stroke="#3D9BE9" stroke-width="2.4" stroke-linecap="round"/>
+  </g>
+  <!-- wordmark -->
+  <text x="74" y="42" font-family="'Inter',system-ui,Arial,sans-serif" font-size="30" letter-spacing="-0.5">
+    <tspan fill="#E8EEF5" font-weight="400">Open</tspan><tspan fill="#F2B441" font-weight="800">Diabetic</tspan>
+  </text>
+  <!-- firewall hex dot over the seam -->
+  <polygon points="160,12 165,15 165,21 160,24 155,21 155,15" fill="#2FB67A"/>
+</svg>

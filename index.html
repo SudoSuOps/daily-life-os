@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DailyLifeOS — the digital life operating system for diabetics</title>
+<meta name="description" content="DailyLifeOS is a digital life operating system for diabetics: meds, supplies, insurance, appointments, labs, records and family coordination organized into one coherent experience. 90% software, 10% AI — your records never leave home.">
+<link rel="icon" href="assets/bee.svg" type="image/svg+xml">
+<link rel="canonical" href="https://dailylifeos.org/">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#0B0F14">
+<meta name="author" content="OpenDiabetic Foundation">
+<meta name="keywords" content="diabetic operating system, digital life OS, personal health vault, self-hosted health, local AI diabetes, NAS health appliance, privacy-first diabetes, medication reminders, diabetic records, family care coordination">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DailyLifeOS">
+<meta property="og:url" content="https://dailylifeos.org/">
+<meta property="og:title" content="DailyLifeOS — the digital life operating system for diabetics">
+<meta property="og:description" content="Meds, supplies, insurance, appointments, labs, records and family — organized into one coherent experience. 90% software, 10% AI. Your records never leave home.">
+<meta property="og:image" content="https://dailylifeos.org/assets/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="DailyLifeOS — the digital life operating system for diabetics">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@opendiabetics">
+<meta name="twitter:title" content="DailyLifeOS — the digital life operating system for diabetics">
+<meta name="twitter:description" content="Your whole diabetic life, organized into one coherent system. 90% software, 10% AI. Records never leave home.">
+<meta name="twitter:image" content="https://dailylifeos.org/assets/og.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://dailylifeos.org/#app",
+      "name": "DailyLifeOS",
+      "applicationCategory": "HealthApplication",
+      "operatingSystem": "Linux / self-hosted (NAS, mini-PC, Jetson)",
+      "description": "A digital life operating system for diabetics that organizes medications, supplies, insurance, appointments, lab results, records and family coordination into one coherent, privacy-first experience. 90% deterministic software, 10% AI interface; raw records never leave the user's box.",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "publisher": { "@id": "https://dailylifeos.org/#org" },
+      "isPartOf": { "@id": "https://opendiabetic.com/#org" },
+      "featureList": ["medication & refill reminders","supply tracking","insurance & document vault","appointment calendar","lab result history","wound-care photo timeline","family emergency access","on-box AI interface","hash-chained receipts"]
+    },
+    {
+      "@type": ["NGO", "Organization"],
+      "@id": "https://dailylifeos.org/#org",
+      "name": "OpenDiabetic",
+      "alternateName": "OpenDiabetic Foundation",
+      "url": "https://opendiabetic.com",
+      "logo": "https://opendiabetic.com/assets/icon.svg",
+      "email": "build@opendiabetic.com",
+      "telephone": "+1-561-532-7120",
+      "address": { "@type": "PostalAddress", "addressLocality": "Jupiter", "addressRegion": "FL", "addressCountry": "US" },
+      "sameAs": ["https://x.com/opendiabetics", "https://opendiabetic.com", "https://localdiabetic.com", "https://diabeticdocs.com", "https://diabeticnode.com", "https://diabeticdatasets.com", "https://diabeticmodels.com", "https://diabetictruth.org", "https://diabeticledger.com", "https://diabeticdonation.com", "https://github.com/SudoSuOps"],
+      "parentOrganization": {
+        "@type": "Organization",
+        "name": "Swarm and Bee LLC",
+        "legalName": "Swarm and Bee LLC",
+        "alternateName": "Swarm & Bee AI",
+        "address": { "@type": "PostalAddress", "addressRegion": "FL", "addressCountry": "US" },
+        "identifier": [
+          { "@type": "PropertyValue", "propertyID": "SAM UEI", "value": "L9EXVH9L9VU6" },
+          { "@type": "PropertyValue", "propertyID": "CAGE", "value": "20YM3" },
+          { "@type": "PropertyValue", "propertyID": "DUNS", "value": "138652395" }
+        ]
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://dailylifeos.org/#website",
+      "url": "https://dailylifeos.org",
+      "name": "DailyLifeOS",
+      "inLanguage": "en-US",
+      "publisher": { "@id": "https://dailylifeos.org/#org" }
+    }
+  ]
+}
+</script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="nav">
+  <a class="brand" href="/"><span class="bee" aria-hidden="true">🐝</span><span>DailyLife<b>OS</b></span></a>
+  <nav>
+    <a href="#laws">The laws</a>
+    <a href="#stack">The stack</a>
+    <a href="#firewall">The firewall</a>
+    <a href="https://localdiabetic.com">LocalDiabetic</a>
+    <a href="https://opendiabetic.com">OpenDiabetic</a>
+    <a href="mailto:build@opendiabetic.com">Contact</a>
+    <a href="https://x.com/opendiabetics" rel="me" aria-label="OpenDiabetic on X">𝕏</a>
+    <a class="btn ghost" href="https://github.com/SudoSuOps/daily-life-os">The blueprint →</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="micro">Powered by the LocalDiabetic vault · fed by the OpenDiabetic hive</div>
+    <h1>The operating system<br>for <span>daily life with diabetes.</span></h1>
+    <p class="lede">Your meds, supplies, insurance, appointments, labs, records, and family — scattered across
+      ten apps, an inbox, and a spreadsheet today. DailyLifeOS connects them into <b>one coherent system</b>
+      you own. Not a smarter chatbot — a system that quietly keeps you on top of life. <b>Your records never
+      leave home.</b></p>
+    <div class="cta">
+      <a class="btn" href="#stack">See the stack</a>
+      <a class="btn ghost" href="#laws">How it's built →</a>
+    </div>
+    <p class="micro">90% software · 10% AI · the model is one service, not the star</p>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap stats">
+    <div><b>90/10</b><span>software / AI — the system knows, the model speaks</span></div>
+    <div><b>4</b><span>layers — math &amp; code · data · models · edge</span></div>
+    <div><b>1</b><span>law — PHI never leaves your box</span></div>
+    <div><b>$0</b><span>to the diabetic — funded by the hive</span></div>
+  </div>
+  <p class="src wrap">The center of gravity isn't the model — it's <b>the workflow and the ownership</b>.
+    The thing you feel working for you every morning is the system helping you stay on top of life.</p>
+</section>
+
+<section id="laws" class="wrap section">
+  <h2>The three laws</h2>
+  <p class="sub">Most projects start with the technology and go hunting for a problem. We start with the daily
+    realities of living with diabetes — and build only what earns its place.</p>
+  <div class="cards">
+    <div class="card"><h3>① 90% software, 10% AI</h3>
+      <p>Real value is mundane: <i>did I take my meds? when's my appointment? what was my last A1C? how many
+        strips are left?</i> Those are data, workflow, and retrieval problems — deterministic software. The
+        model is the friendly <b>natural-language interface</b>, not the thing that knows.</p></div>
+    <div class="card"><h3>② Integration over invention</h3>
+      <p>The hardware is commodity and the open-source organs already exist — Nextcloud, Immich, Home Assistant,
+        Paperless, ntfy, calendars, OCR. Nobody has connected them into one coherent <b>diabetic-life
+        experience</b>. That experience is the product. The moat isn't a box.</p></div>
+    <div class="card"><h3>③ The disappearance test</h3>
+      <p>We build only what you'd <b>notice if it vanished tomorrow</b> — your refill reminder, your insurance
+        documents, your appointment calendar, your family's emergency access, your records. A 10%-smarter
+        chatbot? Nobody would notice. Utility over novelty.</p></div>
+  </div>
+</section>
+
+<section id="stack" class="section dark">
+  <div class="wrap">
+    <h2>The four-layer stack</h2>
+    <p class="sub">Every layer is real — mapped to code that runs today or weights cooking right now. Honest
+      status on each.</p>
+    <div class="cards">
+      <div class="card"><h3>① Math &amp; Code <span class="pill live">LIVE</span></h3>
+        <p>The foundation — rules, schedules, reminders, supply tracking, escalations, audit trails,
+          notifications, indexing, sync. <b>None of it needs frontier AI.</b><br>
+          <span class="muted">Live: the reminder/nudge engine on the NAS (cron + ntfy + email), generic-off-box.</span></p></div>
+      <div class="card"><h3>② Data — the vault <span class="pill live">LIVE</span></h3>
+        <p>Records, insurance, contacts, appointments, labs, imaging, medication history — storage and
+          retrieval, on your box.<br>
+          <span class="muted">Live: the 15-folder Home Vault with a hard invariant. Next: typed records so
+          retrieval is a query, not a file hunt.</span></p></div>
+      <div class="card"><h3>③ Specialized Models <span class="pill build">IN BUILD</span></h3>
+        <p>Purpose-built diabetic models that understand CGM data, insurance terms, wound-care, supply
+          management — <b>domain knowledge beats parameter count.</b><br>
+          <span class="muted">Cooking now: DiabeticAnchor-27B. Proven: the foot-care &amp; appeal edge models.</span></p></div>
+      <div class="card"><h3>④ Edge Deployment <span class="pill live">LIVE</span></h3>
+        <p>Train once in the hive, distribute distilled: <b>27B → 14B → 9B → 4–7B</b>, down to the box in your
+          home. Most people never need the 27B locally.<br>
+          <span class="muted">Live: the on-box edge brain (organize/summarize/remind; diagnosis refused).</span></p></div>
+    </div>
+    <p class="line" style="margin-top:22px">Most users never need a frontier model running locally. They need
+      <i>"find my insurance card"</i> and <i>"remind me to refill insulin."</i> Software problems first — the
+      model is there when language understanding helps.</p>
+  </div>
+</section>
+
+<section class="wrap section">
+  <h2>Integration over invention</h2>
+  <p class="sub">The 90% is mostly <b>wiring proven tools together</b> and teaching them to speak diabetes —
+    behind the firewall, with receipts, under one conversational shell.</p>
+  <table class="intmap">
+    <thead><tr><th>Daily reality</th><th>Proven open-source organ</th><th>What DailyLifeOS adds</th></tr></thead>
+    <tbody>
+      <tr><td>Records &amp; documents</td><td>Paperless-ngx · Nextcloud</td><td>typed diabetic taxonomy · 10-second retrieval</td></tr>
+      <tr><td>Wound tracking</td><td>Immich</td><td>wound-progression timeline · clinician-share</td></tr>
+      <tr><td>Lab results (A1C)</td><td>OCR (tesseract)</td><td>structured history + trend</td></tr>
+      <tr><td>Meds &amp; refills</td><td>ntfy + reminder engine <b class="ok">✓ live</b></td><td>med schedule · days-of-supply math</td></tr>
+      <tr><td>Appointments</td><td>CalDAV · Radicale</td><td>visit-prep packets · podiatry cadence</td></tr>
+      <tr><td>Supplies &amp; inventory</td><td>Grocy</td><td>reorder-before-zero</td></tr>
+      <tr><td>Sensors &amp; automation</td><td>Home Assistant</td><td>CGM / scale ingest · alerts</td></tr>
+      <tr><td>Family &amp; emergency</td><td><span class="muted">thin custom</span></td><td>emergency access · escalation ladder</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="firewall" class="section dark">
+  <div class="wrap">
+    <h2>The one law: the firewall</h2>
+    <p class="sub">A digital life OS holds your most private information. So it has exactly one inviolable rule.</p>
+    <div class="firewall">
+      <div class="half home">
+        <h3>🏠 Your box (LocalDiabetic)</h3>
+        <p>Your vault, your records, your photos, your inference — all on hardware you own. Raw PHI is read in
+          memory, used, and never persisted off-box.</p>
+        <p class="rule">PHI never leaves home.</p>
+      </div>
+      <div class="cross">
+        <span>models flow ▼ down</span>
+        <span>receipts flow ▲ up</span>
+        <span class="never">PHI crosses NEVER</span>
+      </div>
+      <div class="half hive">
+        <h3>🐝 The hive (OpenDiabetic)</h3>
+        <p>Cooks the models, runs the heavy compute, receives only non-PHI receipts. It refuses any data that
+          isn't typed open / synthetic / model.</p>
+        <p class="rule">Knows nothing about you.</p>
+      </div>
+    </div>
+    <p class="enforce">Enforced in code, both sides: the hive runs <code>assert_non_phi</code>; the edge brain
+      refuses diagnosis with a hard <code>422</code> and never writes PHI. Every action emits a hash-chained,
+      PHI-blind receipt you can recompute yourself at <a href="https://diabeticledger.com">diabeticledger.com</a>.</p>
+  </div>
+</section>
+
+<section class="wrap section">
+  <h2>The disappearance test</h2>
+  <p class="sub">The simplest test of a real product: would you notice if it vanished tomorrow?</p>
+  <div class="model">
+    <div class="col bad">
+      <h4>Nobody would notice</h4>
+      <p>A chatbot that's 10% smarter. A clever demo. A benchmark score. The novelty layer most AI products
+        ship — and the thing a diabetic least needs.</p>
+      <p class="big">✕<small>we skip it</small></p>
+    </div>
+    <div class="col good">
+      <h4>You'd feel the hole instantly</h4>
+      <p>Your refill reminder. Your insurance documents. Your appointment calendar. Your family's emergency
+        access. Your A1C history. Your supply count.</p>
+      <p class="big">✓<small>we build it</small></p>
+    </div>
+  </div>
+  <p class="line">Same spirit as the mission itself: <b>give people what they need, not what you have.</b></p>
+</section>
+
+<section class="section give-what">
+  <div class="wrap">
+    <h2>Where it sits in the house</h2>
+    <p class="sub">DailyLifeOS isn't a standalone app — it's the daily-life layer of the OpenDiabetic ecosystem.
+      The model is one service among many.</p>
+    <div class="needs">
+      <div><b>🐝 OpenDiabetic — the hive</b><span>Cloud-side: compute, datasets, cooked models, community
+        resources. Trains once, sends knowledge down.</span></div>
+      <div><b>🐝 LocalDiabetic — the box</b><span>Your home node: the vault, automation, notifications, family
+        support, local inference. DailyLifeOS is what runs on it.</span></div>
+    </div>
+    <p class="line" style="margin-top:24px">A 2-bay NAS, a UGREEN, a ZimaCube, a Jetson — <b>any is enough</b>,
+      because most of the value comes from math, code, storage, and execution. The model just makes the
+      interface friendlier. The hardware is a commodity; <b>the experience is the product.</b></p>
+    <div class="cta center">
+      <a class="btn" href="https://github.com/SudoSuOps/daily-life-os">Read the architecture</a>
+      <a class="btn ghost" href="https://localdiabetic.com">Get the LocalDiabetic box →</a>
+    </div>
+  </div>
+</section>
+
+<section class="section dark">
+  <div class="wrap">
+    <h2>Honest status board</h2>
+    <p class="sub">No vaporware. What runs today, what's framework, what's cooking — stated plainly.</p>
+    <table class="intmap status">
+      <thead><tr><th>Layer</th><th class="ok">Live today</th><th>Framework / in build</th></tr></thead>
+      <tbody>
+        <tr><td>① Math &amp; Code</td><td class="ok">reminder / nudge engine (NAS + ntfy + email)</td><td>supply tracking · escalations · indexing</td></tr>
+        <tr><td>② Data — vault</td><td class="ok">15-folder Home Vault + hard invariant</td><td>typed records + indexed retrieval</td></tr>
+        <tr><td>③ Models</td><td class="ok">foot-care &amp; appeal edge models (proven)</td><td>DiabeticAnchor-27B (cooking)</td></tr>
+        <tr><td>④ Edge</td><td class="ok">on-box edge brain (diagnosis refused)</td><td>27B→14B→9B→4B distillation ladder</td></tr>
+      </tbody>
+    </table>
+    <p class="line" style="margin-top:20px"><b>First build:</b> the typed vault + retrieval — so <i>"find my
+      insurance card"</i> and <i>"what was my last A1C?"</i> return in ten seconds. Highest disappearance-test
+      value, pure software, no model required. The model becomes the shell once the system underneath is solid.</p>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <img src="assets/wordmark.svg" alt="DailyLifeOS" height="40">
+    <p>DailyLifeOS is the daily-life layer · LocalDiabetic is the box · OpenDiabetic is the hive · DiabeticLedger is the proof.</p>
+    <p class="links">
+      <a href="https://opendiabetic.com">OpenDiabetic</a> ·
+      <a href="https://localdiabetic.com">LocalDiabetic</a> ·
+      <a href="https://diabeticdocs.com">Docs</a> ·
+      <a href="https://diabeticnode.com">Node</a> ·
+      <a href="https://diabeticdatasets.com">Datasets</a> ·
+      <a href="https://diabeticmodels.com">Models</a> ·
+      <a href="https://diabetictruth.org">Truth</a> ·
+      <a href="https://diabeticledger.com">Ledger</a> ·
+      <a href="https://diabeticdonation.com">Donation</a> ·
+      <a href="mailto:build@opendiabetic.com">build@opendiabetic.com</a>
+    </p>
+    <p class="contact">HQ · Jupiter, Florida · <a href="tel:+15615327120">561.532.7120</a> ·
+      <a href="https://x.com/opendiabetics" rel="me">@opendiabetics</a></p>
+    <p class="motto">Give people what they need, not what you have. We are math and code.</p>
+    <p class="legal">Owned &amp; operated by <b>Swarm and Bee LLC</b> · DBA Swarm &amp; Bee AI · Florida<br>
+      UEI L9EXVH9L9VU6 · CAGE 20YM3 · D-U-N-S 138652395 · Registered &amp; active in SAM.gov<br>
+      &copy; 2026 DefendableOS · Proof of Execution.</p>
+  </div>
+</footer>
+
+</body>
+</html>

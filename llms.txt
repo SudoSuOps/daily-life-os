@@ -1,0 +1,32 @@
+# DailyLifeOS
+
+> DailyLifeOS is a digital life operating system for diabetics — not an AI product, a NAS product, or a
+> healthcare product, but a coherent system that organizes the daily realities of living with diabetes
+> (medications, supplies, insurance paperwork, appointments, lab results, family coordination, wound tracking,
+> records, transportation, food planning) into one experience the user owns. Part of the OpenDiabetic ecosystem;
+> powered by the LocalDiabetic vault, fed by the OpenDiabetic hive.
+
+## The three laws
+- 90% software, 10% AI: the system KNOWS (deterministic, exact, receipted); the model is the natural-language
+  INTERFACE. Value is a data + workflow + retrieval problem, not a model-intelligence problem.
+- Integration over invention: the hardware is commodity and the open-source organs exist (Nextcloud, Immich,
+  Home Assistant, Paperless, ntfy, CalDAV, OCR). The opportunity is connecting them into one coherent experience.
+- The disappearance test: build only what someone would notice if it vanished tomorrow (refill reminder,
+  insurance docs, appointment calendar, family emergency access, medical records).
+
+## The four-layer stack
+1. Math & Code — rules, schedules, reminders, supply tracking, escalations, audit trails, notifications (LIVE: reminder engine).
+2. Data (the vault) — records, insurance, contacts, appointments, labs, meds; storage + retrieval (LIVE: 15-folder vault).
+3. Specialized Models — purpose-built diabetic models; domain knowledge beats parameter count (IN BUILD: DiabeticAnchor-27B).
+4. Edge Deployment — train once in the hive, distill 27B→14B→9B→4-7B down to the box (LIVE: on-box edge brain).
+
+## The one law (the firewall)
+Raw PHI never leaves the box. Models flow down, receipts flow up, PHI crosses never. Enforced in code both sides;
+every action emits a hash-chained, PHI-blind receipt recomputable at diabeticledger.com.
+
+## The house
+- OpenDiabetic (the hive): https://opendiabetic.com — compute, datasets, models, community
+- LocalDiabetic (the box): https://localdiabetic.com — vault, automation, care coordination
+- DiabeticLedger (the proof): https://diabeticledger.com
+- Blueprint / source: https://github.com/SudoSuOps/daily-life-os
+- Operator: Swarm and Bee LLC (DBA Swarm & Bee AI), Jupiter FL · SAM UEI L9EXVH9L9VU6 · build@opendiabetic.com
