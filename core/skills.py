@@ -240,6 +240,49 @@ class Fitness(Skill):
                 "especially with foot, eye, or heart complications.\n")
 
 
+@register
+class Wellbeing(Skill):
+    slug = "wellbeing"; name = "Well-Being"; serves = "patient"; status = "FRAMEWORK"
+    desc = "Mental health & well-being — gentle check-ins, diabetes-distress support, resources, human escalation."
+
+    def gather(self, v, **kw):
+        return {"emergency": [c["name"] for c in v.all("contact") if c.get("is_emergency")]}
+
+    def draft(self, ctx, **kw):
+        fam = ", ".join(ctx["emergency"]) or "[set an emergency contact]"
+        return (_DRAFT_HDR +
+                "WELL-BEING CHECK-IN (gentle, on your box)\n\n"
+                "• A daily 1–5 mood + stress note — living with diabetes is heavy; diabetes-distress and "
+                "depression are common and real, not weakness\n"
+                "• The system organizes your check-ins and surfaces patterns to share with your care team\n"
+                "• Grounding exercises, coping resources, and your support network — close at hand\n\n"
+                f"Your people: {fam}\n\n"
+                "⚠️ This is NOT a therapist and NOT a crisis service. If you are in crisis, call or text "
+                "988 (Suicide & Crisis Lifeline) or 911 right now. This skill ORGANIZES and CONNECTS you to "
+                "humans — it never diagnoses or treats. Escalation: check-in → your emergency contact → care "
+                "team → 988 / 911.\n")
+
+
+@register
+class Sleep(Skill):
+    slug = "sleep"; name = "Sleep"; serves = "patient"; status = "FRAMEWORK"
+    desc = "Sleep tracking & hygiene — log sleep, see patterns (sleep affects glucose), gentle wind-down nudges."
+
+    def gather(self, v, **kw):
+        return {}
+
+    def draft(self, ctx, **kw):
+        return (_DRAFT_HDR +
+                "SLEEP — what to capture (on your box):\n"
+                "  • bedtime · wake time · hours · how rested (1–5)\n"
+                "  • the system tallies your average and surfaces patterns — poor sleep can raise glucose\n\n"
+                "Hygiene basics: consistent schedule · dim screens before bed · watch late carbs & caffeine · "
+                "a foot check before bed.\n\n"
+                "[the on-box model summarizes trends and sets a wind-down nudge]. It ORGANIZES your sleep log — "
+                "it never interprets a reading or diagnoses a sleep disorder; bring the patterns to your care "
+                "team (ask about sleep apnea, which is common with diabetes).\n")
+
+
 def list_skills():
     return [{"slug": s.slug, "name": s.name, "serves": s.serves, "status": s.status, "desc": s.desc}
             for s in REGISTRY.values()]
