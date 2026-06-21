@@ -283,6 +283,39 @@ class Sleep(Skill):
                 "team (ask about sleep apnea, which is common with diabetes).\n")
 
 
+@register
+class AskDoctor(Skill):
+    slug = "ask-doctor"; name = "Ask the Doctor"; serves = "patient"; status = "FRAMEWORK"
+    desc = "Visit prep — turns your records into the right questions to ASK your doctor (it never answers them)."
+
+    def gather(self, v, **kw):
+        from . import query
+        return {"appt": query.next_appointment(v), "a1c": query.last_lab(v, "A1C"),
+                "refill": query.refill_due(v)}
+
+    def draft(self, ctx, **kw):
+        appt, a1c, refill = ctx["appt"], ctx["a1c"], ctx["refill"]
+        lines = [_DRAFT_HDR, "QUESTIONS TO BRING TO YOUR VISIT\n"]
+        if appt.get("found"):
+            lines.append(f"Visit: {appt['specialty']} with {appt['provider']} (in {appt['in_days']} days)\n")
+        if a1c.get("found"):
+            t = a1c.get("trend_vs_prev")
+            dirn = " (down from prior)" if t and t < 0 else (" (up from prior)" if t and t > 0 else "")
+            lines.append(f"• My last A1C was {a1c['value']}%{dirn} — are we on track, or should we adjust the plan?")
+        if refill.get("due"):
+            lines.append("• I'm low on " + ", ".join(d["name"] for d in refill["due"])
+                         + " — can we handle refills today?")
+        lines += [
+            "• Any changes to my medications or doses?",
+            "• How do my feet look — anything to watch? (mention any numbness, sores, or hot spots)",
+            "• When are my next A1C, eye exam, and foot exam due?",
+            "• Is there anything in my recent labs I should understand?",
+        ]
+        lines.append("\nThis prepares questions for YOU to ask — it does not answer medical questions or give "
+                     "advice. Your doctor answers; this just makes sure nothing important gets forgotten.")
+        return "\n".join(lines)
+
+
 def list_skills():
     return [{"slug": s.slug, "name": s.name, "serves": s.serves, "status": s.status, "desc": s.desc}
             for s in REGISTRY.values()]
