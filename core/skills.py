@@ -219,6 +219,27 @@ class MenuCreator(Skill):
                 "General educational guidance — your dietitian/care team sets your targets.\n")
 
 
+@register
+class Fitness(Skill):
+    slug = "fitness"; name = "Fitness"; serves = "patient"; status = "FRAMEWORK"
+    desc = "Daily exercise — gentle, foot-safe movement plans and activity nudges built around your day."
+
+    def gather(self, v, **kw):
+        return {}
+
+    def draft(self, ctx, minutes="20", **kw):
+        return (_DRAFT_HDR +
+                f"DAILY MOVEMENT — ~{minutes} min, foot-safe options\n\n"
+                "• Walk after meals (10 min × 2) — gentle, steadies post-meal energy\n"
+                "• Low-impact strength: resistance bands, chair exercises\n"
+                "• Swimming / cycling — easy on the feet and joints\n"
+                "• Foot check BEFORE and AFTER every session (blisters, hot spots, cuts) — with neuropathy you "
+                "may not feel them; well-fitted shoes always\n\n"
+                "[the on-box model tailors the plan to your day, energy, and foot status, and sets the nudge]. "
+                "General activity guidance — not medical exercise therapy. Clear new exercise with your care team, "
+                "especially with foot, eye, or heart complications.\n")
+
+
 def list_skills():
     return [{"slug": s.slug, "name": s.name, "serves": s.serves, "status": s.status, "desc": s.desc}
             for s in REGISTRY.values()]
