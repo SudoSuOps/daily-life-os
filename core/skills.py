@@ -117,6 +117,108 @@ class GrantWriter(Skill):
                 "280K-row assistance corpus]. You review, you sign, it submits on your approval.\n")
 
 
+@register
+class LegalSkill(Skill):
+    slug = "legal"; name = "Legal"; serves = "both"; status = "FRAMEWORK"
+    desc = "Legal & advocacy — records requests, ADA/FMLA & disability paperwork, consumer-rights disputes."
+
+    def gather(self, v, **kw):
+        return {"documents": [d["title"] for d in v.all("document")],
+                "contacts": [c["name"] for c in v.all("contact")]}
+
+    def draft(self, ctx, matter="", to="", **kw):
+        today = dt.date.today().isoformat()
+        docs = ", ".join(ctx["documents"]) or "none on file"
+        return (_DRAFT_HDR +
+                f"{today}\nTo: {to or '[recipient]'}\n"
+                f"Re: {matter or '[matter — medical-records request / ADA accommodation / FMLA / billing dispute]'}\n\n"
+                f"Records on file you may attach: {docs}\n\n"
+                "[the on-box legal model drafts the letter/packet from the consumer-rights + disability corpus "
+                "(95K rows): records requests, ADA accommodation, FMLA, SSDI/SSI function narrative, billing "
+                "disputes]. This is self-advocacy drafting, not legal advice — you review and sign.\n\n"
+                "Escalation: request → formal complaint → state regulator / civil-rights office.\n")
+
+
+@register
+class AccountingSkill(Skill):
+    slug = "accounting"; name = "Accounting"; serves = "both"; status = "FRAMEWORK"
+    desc = "Medical accounting — expenses, deductible progress, HSA/FSA-eligible categories, cost of care."
+
+    def gather(self, v, **kw):
+        return {"meds": v.all("medication"), "supplies": v.all("supply_item"),
+                "visits": len(v.all("appointment"))}
+
+    def draft(self, ctx, year="", **kw):
+        meds, sup, visits = ctx["meds"], ctx["supplies"], ctx["visits"]
+        yr = year or dt.date.today().year
+        return (_DRAFT_HDR +
+                f"MEDICAL EXPENSE ORGANIZER · {yr}\n\n"
+                f"Cost drivers tracked on your box:\n"
+                f"  • Medications:  {len(meds)} ({', '.join(m['name'] for m in meds) or 'none'})\n"
+                f"  • Supplies:     {len(sup)} ({', '.join(s['name'] for s in sup) or 'none'})\n"
+                f"  • Appointments: {visits} on file\n\n"
+                "Tax / HSA / FSA categories: prescriptions · diabetic supplies (strips, CGM, needles) · "
+                "office visits · therapeutic shoes · mileage to care.\n"
+                "[the on-box finance model (71K-row corpus) categorizes each expense, tracks deductible progress, "
+                "flags HSA/FSA-eligible spend]. Add cost amounts to your records to enable dollar totals.\n")
+
+
+@register
+class Cookbook(Skill):
+    slug = "cookbook"; name = "Cookbook"; serves = "patient"; status = "FRAMEWORK"
+    desc = "Diabetic-friendly recipes — plate-method, lower-glycemic ideas built around what you like."
+
+    def gather(self, v, **kw):
+        return {"meds": [m["name"] for m in v.all("medication")]}
+
+    def draft(self, ctx, craving="", **kw):
+        return (_DRAFT_HDR +
+                f"RECIPE IDEAS{f' for: {craving}' if craving else ''} (plate-method, general guidance)\n\n"
+                "• ½ plate non-starchy veg · ¼ plate lean protein · ¼ plate smart carbs\n"
+                "• Sample: grilled chicken + roasted broccoli + ⅓ cup quinoa\n"
+                "• Sample: salmon + big green salad + small sweet potato\n\n"
+                "[the on-box nutrition model expands these from the cited diabetic-plate corpus + your tastes]. "
+                "General educational guidance only — not medical nutrition therapy. Your care team sets targets.\n")
+
+
+@register
+class DietMonitor(Skill):
+    slug = "diet-monitor"; name = "Diet Monitor"; serves = "patient"; status = "FRAMEWORK"
+    desc = "Log meals & carbs, see patterns over time — organize what you eat, never interpret your readings."
+
+    def gather(self, v, **kw):
+        return {}
+
+    def draft(self, ctx, **kw):
+        return (_DRAFT_HDR +
+                "DIET LOG — what to capture (stays on your box):\n"
+                "  • meal · time · est. carbs · how you felt\n"
+                "  • the system tallies daily carbs and surfaces patterns over weeks\n\n"
+                "[the on-box model summarizes trends and flags what to discuss at your next visit]. It ORGANIZES "
+                "your log — it never interprets a glucose reading or says 'your sugar is high, eat X' (that's the "
+                "firewall: educate + organize, never diagnose). Bring the summary to your care team.\n"
+                "Note: a food_log record type is the next vault addition to make this fully live.\n")
+
+
+@register
+class MenuCreator(Skill):
+    slug = "menu-creator"; name = "Menu Creator"; serves = "patient"; status = "FRAMEWORK"
+    desc = "Weekly plate-method menu + grocery list, aligned to your preferences and budget."
+
+    def gather(self, v, **kw):
+        return {}
+
+    def draft(self, ctx, days="7", **kw):
+        return (_DRAFT_HDR +
+                f"{days}-DAY MENU (plate-method) + GROCERY LIST\n\n"
+                "Mon — eggs+spinach / chicken salad / salmon+veg+quinoa\n"
+                "Tue — Greek yogurt+berries / turkey wrap / stir-fry+brown rice\n"
+                "… [the on-box nutrition model fills the full week from your tastes, then auto-builds the grocery "
+                "list and can hand it to the reorder flow]\n\n"
+                "GROCERY (sample): eggs · spinach · chicken · salmon · quinoa · berries · Greek yogurt · broccoli\n"
+                "General educational guidance — your dietitian/care team sets your targets.\n")
+
+
 def list_skills():
     return [{"slug": s.slug, "name": s.name, "serves": s.serves, "status": s.status, "desc": s.desc}
             for s in REGISTRY.values()]
