@@ -67,6 +67,21 @@ Every answer is an exact lookup or a piece of arithmetic — **no model, no gues
 model (Layer 3) becomes the friendly natural-language shell *later*; it calls these same functions,
 and the answers never change. That's the point.
 
+
+## Skills — the apps on the OS (Layer 3)
+
+```bash
+python3 ld.py skills                              # list installed apps
+python3 ld.py skill credit-sniper claim=CLM-4471 denial_reason="not medically necessary"
+python3 ld.py skill grant-writer                 # match assistance + draft application
+python3 ld.py skill letter-drop to="Dr. Greene" subject="Records request"
+```
+
+Each skill is **Agent-0 + human-in-the-loop**: it gathers your on-box data, drafts an artifact, and waits for
+your approval — nothing sends on its own, every run a PHI-blind receipt. `letter-drop`, `credit-sniper`
+(model: CreditSniper-edge-4B, ledger-proven), `grant-writer` (corpus: SwarmGrant 280K). Plug a new app in by
+subclassing `Skill` and calling `register()`.
+
 ## Deploy — hardware-agnostic (the durable part)
 
 Target is **Ubuntu + Docker + local storage**; Synology, UGREEN, ZimaCube, mini-PCs, and Jetsons are

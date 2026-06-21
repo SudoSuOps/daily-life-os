@@ -100,6 +100,13 @@ def generate(v, name="Don"):
                          f'<span class="when">{_esc(r["phone"])}</span></div>' for r in emerg) \
         or '<p class="empty">No emergency contact set.</p>'
 
+    # skills (the apps on the OS) — Layer 3, human-in-the-loop
+    from . import skills
+    skill_rows = "".join(
+        f'<div class="row"><span>🐝 {_esc(s["name"])}</span>'
+        f'<span class="when">{_esc(s["status"].lower())}</span></div>' for s in skills.list_skills()) \
+        or '<p class="empty">No skills installed.</p>'
+
     ok, nrec = receipts.verify()
 
     cards = "".join([
@@ -110,6 +117,7 @@ def generate(v, name="Don"):
         _card("🔔 Due for refill", refill_body, HONEY6),
         _card("📄 Documents", doc_rows, "#3D9BE9"),
         _card("🆘 Emergency", emerg_body, RED),
+        _card("🧩 Your apps · draft &amp; approve", skill_rows, HONEY),
     ])
 
     return f"""<!doctype html><html lang="en"><head><meta charset="utf-8">

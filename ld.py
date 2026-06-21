@@ -76,6 +76,27 @@ def main(argv):
         with open(out, "w") as f:
             f.write(html)
         print(f"🐝 LifeBoard written → {out}  ({len(html)} bytes, rendered from the vault)")
+    elif cmd == "skills":
+        from core import skills
+        print("🐝 Skills (apps on the OS) — each proposes a draft; you approve before anything sends:")
+        for s in skills.list_skills():
+            print(f"  · {s['name']:14} [{s['status']}] ({s['serves']}) — {s['desc']}")
+    elif cmd == "skill":
+        from core import skills
+        if not rest:
+            print("usage: ld skill <slug> [key=value ...]   (slugs: " + ", ".join(skills.REGISTRY) + ")")
+            v.close(); return
+        slug = rest[0]
+        kw = {}
+        for kv in rest[1:]:
+            k, _, val = kv.partition("=")
+            kw[k] = val
+        res = skills.run(v, slug, **kw)
+        if res.get("error"):
+            print(res["error"])
+        else:
+            print(f"🐝 {res['name']} [{res['status']}] · receipt {res['receipt']}…\n")
+            print(res["draft"])
     elif cmd == "receipts":
         ok, n = receipts.verify()
         print(f"receipt chain: {'OK ✅' if ok else 'BROKEN ❌'} · {n} PHI-blind receipts")
