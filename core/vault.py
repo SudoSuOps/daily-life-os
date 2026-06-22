@@ -35,9 +35,21 @@ CREATE TABLE IF NOT EXISTS supply_item (
 CREATE TABLE IF NOT EXISTS wound_photo (
   id INTEGER PRIMARY KEY, file_path TEXT, location TEXT, when_ts TEXT,
   notes TEXT, created TEXT);
+CREATE TABLE IF NOT EXISTS meal (
+  id INTEGER PRIMARY KEY, slot TEXT, name TEXT, carbs_g REAL, when_ts TEXT,
+  logged INTEGER DEFAULT 0, created TEXT);
+CREATE TABLE IF NOT EXISTS activity (
+  id INTEGER PRIMARY KEY, name TEXT, kind TEXT, target_min REAL, done_min REAL,
+  steps INTEGER, when_ts TEXT, created TEXT);
+CREATE TABLE IF NOT EXISTS notification (
+  id INTEGER PRIMARY KEY, text TEXT, channel TEXT, when_ts TEXT, status TEXT,
+  created TEXT);
+CREATE TABLE IF NOT EXISTS device (
+  id INTEGER PRIMARY KEY, name TEXT, kind TEXT, last_sync TEXT, created TEXT);
 """
 
-TABLES = ["appointment", "medication", "lab_result", "document", "contact", "supply_item", "wound_photo"]
+TABLES = ["appointment", "medication", "lab_result", "document", "contact", "supply_item", "wound_photo",
+          "meal", "activity", "notification", "device"]
 
 
 def _now():

@@ -16,7 +16,8 @@ def _days(n):
 def seed(v=None):
     v = v or Vault()
     # clear demo tables for idempotency
-    for t in ["appointment", "medication", "lab_result", "document", "contact", "supply_item", "wound_photo"]:
+    for t in ["appointment", "medication", "lab_result", "document", "contact", "supply_item", "wound_photo",
+              "meal", "activity", "notification", "device"]:
         v.cx.execute(f"DELETE FROM {t}")
     v.cx.commit()
 
@@ -50,6 +51,26 @@ def seed(v=None):
 
     v.add("wound_photo", file_path="vault/09-wound/2026-06-14-left-toe.jpg", location="left great toe",
           when_ts=_days(-7), notes="healing, less redness")
+
+    # food — today's diabetic-friendly meals (the diet/menu skill drafts these)
+    v.add("meal", slot="Breakfast", name="Greek yogurt + berries + walnuts", carbs_g=22, when_ts=_days(0), logged=1)
+    v.add("meal", slot="Lunch", name="Grilled chicken salad, olive oil", carbs_g=18, when_ts=_days(0), logged=1)
+    v.add("meal", slot="Dinner", name="Salmon, quinoa, roasted broccoli", carbs_g=35, when_ts=_days(0), logged=0)
+    v.add("meal", slot="Snack", name="Apple + almond butter", carbs_g=20, when_ts=_days(0), logged=0)
+
+    # fitness — today's movement (the fitness skill)
+    v.add("activity", name="Morning walk", kind="walk", target_min=30, done_min=30, steps=4200, when_ts=_days(0))
+    v.add("activity", name="Evening stretch", kind="mobility", target_min=10, done_min=0, steps=0, when_ts=_days(0))
+
+    # notifications — gentle nudges delivered to phone & watch
+    v.add("notification", text="Foot check tonight 👣", channel="phone · watch", when_ts=_days(0), status="scheduled")
+    v.add("notification", text="Take Lantus (20u)", channel="phone · watch", when_ts=_days(0), status="scheduled")
+    v.add("notification", text="Metformin — taken", channel="watch", when_ts=_days(0), status="sent")
+    v.add("notification", text="Test strips running low", channel="phone", when_ts=_days(0), status="sent")
+
+    # synced devices — where the nudges land (generic only; no PHI leaves the box)
+    v.add("device", name="iPhone", kind="phone", last_sync="just now")
+    v.add("device", name="Apple Watch", kind="watch", last_sync="2m ago")
     v.cx.commit()
     return v
 

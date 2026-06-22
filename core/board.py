@@ -107,14 +107,53 @@ def generate(v, name="Don"):
         f'<span class="when">{_esc(s["status"].lower())}</span></div>' for s in skills.list_skills()) \
         or '<p class="empty">No skills installed.</p>'
 
+    # food — today's meals + carbs (the diet/menu skill writes here)
+    meals = sorted(v.all("meal"), key=lambda r: r.get("when_ts") or "")
+    meal_rows = "".join(
+        f'<div class="row"><span>{"✓" if r.get("logged") else "○"} <b>{_esc(r["slot"])}</b> · {_esc(r["name"])}</span>'
+        f'<span class="when">{int(r["carbs_g"])}g carbs</span></div>' for r in meals) \
+        or '<p class="empty">No meals planned.</p>'
+    carbs = sum(int(r.get("carbs_g") or 0) for r in meals)
+    if meals:
+        meal_rows += f'<div class="row"><span>🍽️ Carbs today</span><span class="when">{carbs}g</span></div>'
+
+    # fitness — today's movement (the fitness/exercise skill writes here)
+    acts = v.all("activity")
+    act_rows = "".join(
+        f'<div class="row"><span>🏃 {_esc(r["name"])}</span>'
+        f'<span class="when">{int(r.get("done_min") or 0)}/{int(r.get("target_min") or 0)} min</span></div>'
+        for r in acts) or '<p class="empty">No activity logged.</p>'
+    steps = sum(int(r.get("steps") or 0) for r in acts)
+    if steps:
+        act_rows += f'<div class="row"><span>👟 Steps today</span><span class="when">{steps:,}</span></div>'
+
+    # notifications — recent + scheduled nudges (delivered to phone & watch)
+    notes = sorted(v.all("notification"), key=lambda r: r.get("when_ts") or "")
+    note_rows = "".join(
+        f'<div class="row"><span>{"🔔" if r.get("status") == "scheduled" else "✓"} {_esc(r["text"])}</span>'
+        f'<span class="when">{_esc(r.get("channel") or "")}</span></div>' for r in notes[:5]) \
+        or '<p class="empty">No notifications.</p>'
+
+    # synced devices — the phone + watch the nudges land on (generic only; no PHI leaves)
+    devs = v.all("device")
+    kind_icon = {"phone": "📱", "watch": "⌚", "tablet": "📲"}
+    dev_rows = "".join(
+        f'<div class="row"><span>{kind_icon.get(r.get("kind"), "📟")} {_esc(r["name"])}</span>'
+        f'<span class="when">{_esc(r.get("last_sync") or "synced")}</span></div>' for r in devs) \
+        or '<p class="empty">No devices paired.</p>'
+
     ok, nrec = receipts.verify()
 
     cards = "".join([
         _card("📅 Next appointments", appt_rows, HONEY),
         _card("💊 Today's medications", med_rows, GREEN),
+        _card("🍎 Food today", meal_rows, GREEN),
+        _card("🏃 Move today", act_rows, "#3D9BE9"),
         _card("🩸 A1C trend", a1c_body, HONEY),
+        _card("🔔 Notifications", note_rows, HONEY6),
+        _card("📱 Synced devices", dev_rows, GREEN),
         _card("📦 Supplies", sup_rows, GREEN),
-        _card("🔔 Due for refill", refill_body, HONEY6),
+        _card("🔁 Due for refill", refill_body, HONEY6),
         _card("📄 Documents", doc_rows, "#3D9BE9"),
         _card("🆘 Emergency", emerg_body, RED),
         _card("🧩 Your apps · draft &amp; approve", skill_rows, HONEY),
