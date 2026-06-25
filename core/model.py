@@ -17,7 +17,43 @@ import json, os, urllib.request
 # on-box ONLY — host is hard-coded to loopback; only the model NAME is configurable.
 _ENDPOINT = "http://127.0.0.1:11434/api/chat"
 _TAGS = "http://127.0.0.1:11434/api/tags"
-MODEL = os.environ.get("LD_MODEL", "diabetic-daily")   # DiabeticDaily-4B (edge) / -9B (home) in local ollama
+_FORCED = os.environ.get("LD_MODEL")                   # explicit override, e.g. LD_MODEL=diabetic-jr-9b
+MODEL = _FORCED or "diabetic-daily"                    # default / back-compat
+_resolved = None
+
+
+def _installed_tags(timeout=2):
+    """Model names installed in the LOCAL ollama, or None if ollama isn't reachable. (loopback only)"""
+    try:
+        o = json.loads(urllib.request.urlopen(_TAGS, timeout=timeout).read())
+        return [m.get("name", "") for m in o.get("models", [])]
+    except Exception:
+        return None
+
+
+def resolve_model(timeout=2):
+    """Pick the on-box model NAME to use — loopback only, never a remote host.
+    Order: an explicit LD_MODEL that's installed → any DiabeticDaily/diabetic model → the default.
+    So whatever DiabeticDaily tag the user pulled (e.g. hf.co/SwarmandBee/DiabeticDaily-4B:Q4_K_M)
+    just works with no configuration."""
+    global _resolved
+    if _resolved:
+        return _resolved
+    tags = _installed_tags(timeout)
+    if not tags:
+        return None
+    if _FORCED:                                                       # honor an explicit, installed override
+        for t in tags:
+            if t == _FORCED or t.split(":")[0] == _FORCED:
+                _resolved = t; return t
+    for needle in ("diabeticdaily", "diabetic-daily", "diabetic"):    # auto-discover a diabetic model
+        for t in tags:
+            if needle in t.lower():
+                _resolved = t; return t
+    for t in tags:                                                    # last resort: the configured default
+        if t == MODEL or t.split(":")[0] == MODEL:
+            _resolved = t; return t
+    return None
 
 FIREWALL = (
     "You run ON the user's own box as part of DailyLifeOS, the operating system for a person living with "
@@ -30,18 +66,14 @@ FIREWALL = (
 
 
 def available(timeout=2):
-    """Is a local model serving on this box?"""
-    try:
-        urllib.request.urlopen(_TAGS, timeout=timeout)
-        return True
-    except Exception:
-        return False
+    """Is a usable on-box diabetic model serving (loopback)?"""
+    return resolve_model(timeout) is not None
 
 
 def draft(system, prompt, timeout=60, num_predict=600):
     """Draft on-box via the local DiabeticDaily model (think-off). Returns text, or None if unavailable."""
     body = json.dumps({
-        "model": MODEL, "think": False, "stream": False,
+        "model": resolve_model() or MODEL, "think": False, "stream": False,
         "messages": [{"role": "system", "content": FIREWALL + "\n\n" + system},
                      {"role": "user", "content": prompt}],
         "options": {"temperature": 0.4, "num_predict": num_predict},

@@ -25,8 +25,12 @@
 ### Layer 1 — Math & Code (the foundation)
 Deterministic software. **No frontier AI.** Rules · schedules · reminders · supply tracking · escalations ·
 audit trails · notifications · document indexing · data synchronization.
-- **Live today:** `engine/ld_remind.py` (the reminder/nudge scheduler — daily/weekly/interval/once, ack +
-  family-escalation, generic-off-box) running on the Synology NAS via cron + self-hosted ntfy + Resend email.
+- **Live in the LocalDiabetic *deployment* (separate repo `LocalDiabetic-Home-Vault`, not this repo):**
+  `ld_remind.py` — the reminder/nudge scheduler (daily/weekly/interval/once, ack + family-escalation,
+  generic-off-box) on the Synology NAS via cron + self-hosted ntfy + Resend email.
+- **Live in THIS repo:** the typed vault, the deterministic query engine, the LifeBoard, the skill framework,
+  and hash-chained receipts — the reference implementation of the thesis you can run today. (This repo does
+  not itself ship that NAS reminder engine; the two share the doctrine, not the code.)
 - **Discipline:** `/math-and-code` (re-derive every number — days-of-supply, appeal deadlines), deterministic
   gates, the hash-chained ledger (`dl.py`).
 - **Status:** reminder engine **LIVE**; supply/escalation/indexing **FRAMEWORK**.
@@ -56,8 +60,11 @@ The same knowledge propagates down the network as distilled tiers:
   Home Appliance   9B distilled   (NAS / ZimaCube / UGREEN)
   Jetson         4B–7B distilled  (the edge brain — on-box, private)
 ```
-- **Live today:** the LocalDiabetic Edge Brain (`ld_edge.py` + LFM2.5 on the Jetson @ .79): `/infer`
-  (organize/summarize/nudge, **diagnose→422**) + firewall proxy; only file-write is a non-PHI hash-chained receipt.
+- **Live in the LocalDiabetic *deployment* (separate repo `localdiabetic-edge`, not this repo):** the Edge Brain
+  on the Jetson @ .79 — `/infer` (organize/summarize/nudge, **diagnose→422**) + a firewall proxy, now backed by
+  **DiabeticJr-9B** on a dedicated GPU; the only file-write is a non-PHI hash-chained receipt.
+- **Live in THIS repo:** `core/model.py` — the same idea, loopback-only by design (PHI drafted on-box, never
+  sent off): it **auto-discovers a DiabeticDaily model in your local Ollama** and the skills draft with it.
 - **Why it scales:** most users **never need the 27B locally** — they need "when's my appointment / find my
   insurance card / how many strips left / show my last foot photo / remind me to refill." Software problems
   first; the model is there when language understanding helps.
@@ -123,7 +130,7 @@ helping them stay on top of life — *"my life is organized."*
 | L1 Math & Code | reminder/nudge engine (NAS cron + ntfy + Resend) | supply tracking · escalations · indexing |
 | L2 Data | 15-folder vault + HARD-INVARIANT | typed records + indexed retrieval |
 | L3 Models | footcare-edge-4b, CreditSniper-edge-4B (proven) | DiabeticAnchor-27B (cooking ~35%) |
-| L4 Edge | edge brain (`ld_edge.py` + LFM2.5, diagnose→422) | 27B→14B→9B→4B distillation ladder |
+| L4 Edge | edge brain (`ld_edge.py` + DiabeticJr-9B, diagnose→422) | 27B→14B→9B→4B distillation ladder |
 
 **First build (per the disappearance test):** typed vault + retrieval (L2) so "find my insurance card" and
 "what was my last A1C?" return in 10 seconds — the highest "you'd notice if it vanished" value, and pure L1+L2
